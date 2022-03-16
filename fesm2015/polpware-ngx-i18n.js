@@ -1,137 +1,6 @@
-import { ɵɵinject, NgZone, ɵɵdefineInjectable, ɵsetClassMetadata, Injectable, EventEmitter, ɵɵdirectiveInject, ɵɵinjectPipeChangeDetectorRef, ɵɵdefinePipe, Pipe, ChangeDetectorRef, ɵɵdefineNgModule, ɵɵdefineInjector, ɵɵsetNgModuleScope, NgModule } from '@angular/core';
-import { underscore } from '@polpware/fe-dependencies';
-import { replace } from '@polpware/fe-utilities';
-import { SlidingExpirationCache, ResourceLoader, loadJsonUriP, I18n } from '@polpware/fe-data';
+import { EventEmitter, ɵɵdirectiveInject, ɵɵinjectPipeChangeDetectorRef, ɵɵdefinePipe, ɵɵdefineInjectable, ɵsetClassMetadata, Injectable, Pipe, ChangeDetectorRef, ɵɵdefineNgModule, ɵɵdefineInjector, ɵɵsetNgModuleScope, NgModule } from '@angular/core';
 import { of, isObservable } from 'rxjs';
 import { CommonModule } from '@angular/common';
-
-const _ = underscore;
-/**
- * Verify if the given lang is valid. If the given lang is not valid,
- * this function returns a default one.
- * @private
- * @function validate
- * @param {Object} options The avaliable lang options.
- * @param {String} lang The requested lang code.
- * @returns {String} Verified lang code.
- */
-function validate(options, code) {
-    let lang = code || 'en-us';
-    const entry = _.find(options, e => e.code.substring(0, 2) === lang.substring(0, 2));
-    if (entry) {
-        lang = entry.code;
-    }
-    return lang;
-}
-class ResourceLoaderService {
-    constructor(ngZone) {
-        const cache = new SlidingExpirationCache(3 * 60, 5 * 60, ngZone);
-        this._resourceLoader = new ResourceLoader(cache);
-    }
-    get resourceLoader() {
-        return this._resourceLoader;
-    }
-    /**
-     * Loads the dictionary for the given lang code.
-     * @function loadPromise
-     * @param {String} langCode The requested language code.
-     * @param {String}[] filter The optional language code which we are not interested in.
-     * @returns {Promise} The promise with the state of the loaded language dictionary.
-     * @throws {Error}
-     */
-    loadPromise(langCode, filter) {
-        const resourceLoader = this._resourceLoader;
-        return resourceLoader.getPromise('lang.options', id => id)
-            .then(function (resolvedOptionsUrl) {
-            return loadJsonUriP(resolvedOptionsUrl);
-        })
-            .then(function (resolvedOptions) {
-            return validate(resolvedOptions, langCode);
-        })
-            .then(function (resolvedLangCode) {
-            if (resolvedLangCode === filter) {
-                throw new Error('Loading the current language: ' + resolvedLangCode);
-            }
-            return resolvedLangCode;
-        })
-            .then(function (filteredLangCode) {
-            langCode = filteredLangCode;
-            return resourceLoader.getPromise('lang.urlTmpl', id => id);
-        })
-            .then(function (resolvedUrlTmpl) {
-            return replace(resolvedUrlTmpl, { code: langCode });
-        })
-            .then(function (resolvedUrl) {
-            return loadJsonUriP(resolvedUrl);
-        })
-            .then(function (resolvedData) {
-            I18n.add(resolvedData.code, resolvedData.items);
-            I18n.recycleOthers(resolvedData.code);
-            return resolvedData;
-        });
-    }
-    /**
-     * Load lang options
-     * @function loadOptionPromise
-     * @returns {Promise}
-     */
-    loadOptionPromise() {
-        return this._resourceLoader.getPromise('lang.options', id => id)
-            .then(function (resolvedOptionsUrl) {
-            return loadJsonUriP(resolvedOptionsUrl);
-        });
-    }
-}
-/** @nocollapse */ ResourceLoaderService.ɵfac = function ResourceLoaderService_Factory(t) { return new (t || ResourceLoaderService)(ɵɵinject(NgZone)); };
-/** @nocollapse */ ResourceLoaderService.ɵprov = ɵɵdefineInjectable({ token: ResourceLoaderService, factory: ResourceLoaderService.ɵfac });
-/*@__PURE__*/ (function () { ɵsetClassMetadata(ResourceLoaderService, [{
-        type: Injectable
-    }], function () { return [{ type: NgZone }]; }, null); })();
-
-/* On purpose we do not make it injectable.
-   It is up to the host to define how to do this */
-class NgxTranslatorImplService {
-    constructor() {
-        this._dict = {};
-        this.onTranslationChange = new EventEmitter();
-        this.onLangChange = new EventEmitter();
-        this.onDefaultLangChange = new EventEmitter();
-        this.defaultLang = '';
-        this.currentLang = '';
-        this.langs = [];
-    }
-    getParsedResult(translations, key, interpolateParams) {
-        return key;
-    }
-    get(key, interpolateParams) {
-        // Get
-        let ks = [];
-        if (typeof key == 'string') {
-            ks = key.split('.');
-        }
-        else {
-            ks = key;
-        }
-        ks = ks.filter(a => a);
-        let res = this._dict;
-        for (let i = 0; i < ks.length; i++) {
-            const c = ks[i];
-            if (res[c]) {
-                res = res[c];
-            }
-            else {
-                res = undefined;
-                break;
-            }
-        }
-        const v = res !== undefined ? res : key;
-        return of(v);
-    }
-    loadResources(resources) {
-        // todo: A better implementation
-        Object.assign(this._dict, resources);
-    }
-}
 
 /* tslint:disable */
 /**
@@ -213,6 +82,81 @@ function mergeDeep(target, source) {
         });
     }
     return output;
+}
+/**
+ * Replaces the parameters in the given string. A parameter is delimited by a
+ * a pair of double braces. E.g., {{name}}
+ * @param format The given string
+ * @param params An object defining the values of the parameters in the string.
+ */
+function replaceParams(format, params) {
+    /*jslint unparam: true */
+    return format.replace(/\{\{([a-zA-Z]+)\}\}/g, function (s, key) {
+        return (typeof params[key] === 'undefined') ? '' : params[key];
+    });
+}
+/**
+ * Looks up the given key for its corresponding values
+ * in the given resources.
+ * @param resources Resources
+ * @param key String
+ * @param interpolateParams The values for the parameters.
+ */
+function lookupDeeply(resources, key, interpolateParams) {
+    // Get
+    let ks = [];
+    if (typeof key == 'string') {
+        ks = key.split('.');
+    }
+    else {
+        ks = key;
+    }
+    ks = ks.filter(a => a);
+    let res = resources;
+    for (let i = 0; i < ks.length; i++) {
+        const c = ks[i];
+        if (res[c]) {
+            res = res[c];
+        }
+        else {
+            res = undefined;
+            break;
+        }
+    }
+    let s = undefined;
+    if (res !== undefined && typeof res == 'string') {
+        s = res;
+        if (interpolateParams) {
+            s = replaceParams(res, interpolateParams);
+        }
+    }
+    const v = s !== undefined ? s : ks.join('.');
+    return v;
+}
+
+/* On purpose we do not make it injectable.
+   It is up to the host to define how to do this */
+class NgxTranslatorImplService {
+    constructor() {
+        this._dict = {};
+        this.onTranslationChange = new EventEmitter();
+        this.onLangChange = new EventEmitter();
+        this.onDefaultLangChange = new EventEmitter();
+        this.defaultLang = '';
+        this.currentLang = '';
+        this.langs = [];
+    }
+    getParsedResult(translations, key, interpolateParams) {
+        return key;
+    }
+    get(key, interpolateParams) {
+        const v = lookupDeeply(this._dict, key, interpolateParams);
+        return of(v);
+    }
+    loadResources(resources) {
+        // todo: A better implementation
+        Object.assign(this._dict, resources);
+    }
 }
 
 class HyperTranslatePipe {
@@ -302,6 +246,16 @@ class HyperTranslatePipe {
                 }
             });
         }
+        if (this.value == query) {
+            if (args.length > 3 && isDefined(args[2]) && typeof args[2] === 'object') {
+                const defaultResources = args[2];
+                // Update it
+                const anotherTry = lookupDeeply(defaultResources, query, interpolateParams);
+                if (anotherTry) {
+                    this.value = anotherTry;
+                }
+            }
+        }
         return this.value;
     }
     /**
@@ -364,5 +318,5 @@ class NgxI18nModule {
  * Generated bundle index. Do not edit.
  */
 
-export { HyperTranslatePipe, NgxI18nModule, NgxTranslatorImplService, ResourceLoaderService };
+export { HyperTranslatePipe, NgxI18nModule, NgxTranslatorImplService };
 //# sourceMappingURL=polpware-ngx-i18n.js.map

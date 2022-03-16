@@ -1,14 +1,12 @@
 {
   "name": "@polpware/ngx-i18n",
-  "version": "9.0.0",
+  "version": "9.1.0",
   "dependencies": {
     "tslib": "^1.10.0"
   },
   "peerDependencies": {
     "@angular/common": "^9.0.0",
-    "@angular/core": "^9.0.0",
-    "@polpware/fe-data": "^9.0.0",
-    "@polpware/fe-utilities": "^9.0.0"
+    "@angular/core": "^9.0.0"
   },
   "main": "bundles/polpware-ngx-i18n.umd.js",
   "module": "fesm5/polpware-ngx-i18n.js",
