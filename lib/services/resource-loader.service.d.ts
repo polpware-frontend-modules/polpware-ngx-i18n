@@ -1,9 +1,10 @@
 import { NgZone } from '@angular/core';
 import { ResourceLoader } from '@polpware/fe-data';
+import * as i0 from "@angular/core";
 export declare class ResourceLoaderService {
     private _resourceLoader;
     constructor(ngZone: NgZone);
-    readonly resourceLoader: ResourceLoader;
+    get resourceLoader(): ResourceLoader;
     /**
      * Loads the dictionary for the given lang code.
      * @function loadPromise
@@ -19,4 +20,6 @@ export declare class ResourceLoaderService {
      * @returns {Promise}
      */
     loadOptionPromise(): PromiseLike<any>;
+    static ɵfac: i0.ɵɵFactoryDef<ResourceLoaderService, never>;
+    static ɵprov: i0.ɵɵInjectableDef<ResourceLoaderService>;
 }
