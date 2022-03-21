@@ -257,7 +257,7 @@
                });
            }
            if (this.value == query) {
-               if (args.length > 3 && isDefined(args[2]) && typeof args[2] === 'object') {
+               if (args.length > 2 && isDefined(args[2]) && typeof args[2] === 'object') {
                    var defaultResources = args[2];
                    // Update it
                    var anotherTry = lookupDeeply(defaultResources, query, interpolateParams);
