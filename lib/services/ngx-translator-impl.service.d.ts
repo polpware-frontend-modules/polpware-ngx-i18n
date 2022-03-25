@@ -2,7 +2,9 @@ import { EventEmitter } from "@angular/core";
 import { Observable } from "rxjs";
 import { DefaultLangChangeEvent, INgxTranslator, LangChangeEvent, TranslationChangeEvent } from '../interfaces/ngx-translator.interface';
 export declare class NgxTranslatorImplService implements INgxTranslator {
-    private _dict;
+    protected _dict: {
+        [key: string]: any;
+    };
     onTranslationChange: EventEmitter<TranslationChangeEvent>;
     onLangChange: EventEmitter<LangChangeEvent>;
     onDefaultLangChange: EventEmitter<DefaultLangChangeEvent>;
