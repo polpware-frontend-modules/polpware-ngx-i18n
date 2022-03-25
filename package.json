@@ -1,6 +1,6 @@
 {
   "name": "@polpware/ngx-i18n",
-  "version": "9.1.1",
+  "version": "9.2.0",
   "dependencies": {
     "tslib": "^1.10.0"
   },

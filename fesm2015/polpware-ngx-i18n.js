@@ -1,4 +1,4 @@
-import { EventEmitter, ɵɵdirectiveInject, ɵɵinjectPipeChangeDetectorRef, ɵɵdefinePipe, ɵɵdefineInjectable, ɵsetClassMetadata, Injectable, Pipe, ChangeDetectorRef, ɵɵdefineNgModule, ɵɵdefineInjector, ɵɵsetNgModuleScope, NgModule } from '@angular/core';
+import { EventEmitter, ɵɵdefineDirective, ɵɵdirectiveInject, ɵɵinjectPipeChangeDetectorRef, ɵɵdefinePipe, ɵɵdefineInjectable, ɵsetClassMetadata, Injectable, Pipe, ChangeDetectorRef, ɵɵdefineNgModule, ɵɵdefineInjector, ɵɵsetNgModuleScope, NgModule } from '@angular/core';
 import { of, isObservable } from 'rxjs';
 import { CommonModule } from '@angular/common';
 
@@ -159,10 +159,8 @@ class NgxTranslatorImplService {
     }
 }
 
-class HyperTranslatePipe {
-    constructor(translate, _ref) {
-        this.translate = translate;
-        this._ref = _ref;
+class HyperTranslatePipeBase {
+    constructor() {
         this.value = '';
         this.lastKey = null;
         this.lastParams = [];
@@ -174,7 +172,7 @@ class HyperTranslatePipe {
             this._ref.markForCheck();
         };
         if (translations) {
-            let res = this.translate.getParsedResult(translations, key, interpolateParams);
+            let res = this._translate.getParsedResult(translations, key, interpolateParams);
             if (isObservable(res.subscribe)) {
                 res.subscribe(onTranslation);
             }
@@ -182,7 +180,7 @@ class HyperTranslatePipe {
                 onTranslation(res);
             }
         }
-        this.translate.get(key, interpolateParams).subscribe(onTranslation);
+        this._translate.get(key, interpolateParams).subscribe(onTranslation);
     }
     transform(query, ...args) {
         if (!query || !query.length) {
@@ -221,8 +219,8 @@ class HyperTranslatePipe {
         this._dispose();
         // subscribe to onTranslationChange event, in case the translations change
         if (!this.onTranslationChange) {
-            this.onTranslationChange = this.translate.onTranslationChange.subscribe((event) => {
-                if (this.lastKey && event.lang === this.translate.currentLang) {
+            this.onTranslationChange = this._translate.onTranslationChange.subscribe((event) => {
+                if (this.lastKey && event.lang === this._translate.currentLang) {
                     this.lastKey = null;
                     this.updateValue(query, interpolateParams, event.translations);
                 }
@@ -230,7 +228,7 @@ class HyperTranslatePipe {
         }
         // subscribe to onLangChange event, in case the language changes
         if (!this.onLangChange) {
-            this.onLangChange = this.translate.onLangChange.subscribe((event) => {
+            this.onLangChange = this._translate.onLangChange.subscribe((event) => {
                 if (this.lastKey) {
                     this.lastKey = null; // we want to make sure it doesn't return the same value until it's been updated
                     this.updateValue(query, interpolateParams, event.translations);
@@ -239,22 +237,12 @@ class HyperTranslatePipe {
         }
         // subscribe to onDefaultLangChange event, in case the default language changes
         if (!this.onDefaultLangChange) {
-            this.onDefaultLangChange = this.translate.onDefaultLangChange.subscribe(() => {
+            this.onDefaultLangChange = this._translate.onDefaultLangChange.subscribe(() => {
                 if (this.lastKey) {
                     this.lastKey = null; // we want to make sure it doesn't return the same value until it's been updated
                     this.updateValue(query, interpolateParams);
                 }
             });
-        }
-        if (this.value == query) {
-            if (args.length > 2 && isDefined(args[2]) && typeof args[2] === 'object') {
-                const defaultResources = args[2];
-                // Update it
-                const anotherTry = lookupDeeply(defaultResources, query, interpolateParams);
-                if (anotherTry) {
-                    this.value = anotherTry;
-                }
-            }
         }
         return this.value;
     }
@@ -277,6 +265,16 @@ class HyperTranslatePipe {
     }
     ngOnDestroy() {
         this._dispose();
+    }
+}
+/** @nocollapse */ HyperTranslatePipeBase.ɵfac = function HyperTranslatePipeBase_Factory(t) { return new (t || HyperTranslatePipeBase)(); };
+/** @nocollapse */ HyperTranslatePipeBase.ɵdir = ɵɵdefineDirective({ type: HyperTranslatePipeBase });
+
+class HyperTranslatePipe extends HyperTranslatePipeBase {
+    constructor(_translate, _ref) {
+        super();
+        this._translate = _translate;
+        this._ref = _ref;
     }
 }
 /** @nocollapse */ HyperTranslatePipe.ɵfac = function HyperTranslatePipe_Factory(t) { return new (t || HyperTranslatePipe)(ɵɵdirectiveInject(NgxTranslatorImplService), ɵɵinjectPipeChangeDetectorRef()); };
@@ -318,5 +316,5 @@ class NgxI18nModule {
  * Generated bundle index. Do not edit.
  */
 
-export { HyperTranslatePipe, NgxI18nModule, NgxTranslatorImplService };
+export { HyperTranslatePipe, HyperTranslatePipeBase, NgxI18nModule, NgxTranslatorImplService };
 //# sourceMappingURL=polpware-ngx-i18n.js.map

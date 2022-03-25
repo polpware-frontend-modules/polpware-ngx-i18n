@@ -1,5 +1,6 @@
-import { EventEmitter, ɵɵdirectiveInject, ɵɵinjectPipeChangeDetectorRef, ɵɵdefinePipe, ɵɵdefineInjectable, ɵsetClassMetadata, Injectable, Pipe, ChangeDetectorRef, ɵɵdefineNgModule, ɵɵdefineInjector, ɵɵsetNgModuleScope, NgModule } from '@angular/core';
+import { EventEmitter, ɵɵdefineDirective, ɵɵdirectiveInject, ɵɵinjectPipeChangeDetectorRef, ɵɵdefinePipe, ɵɵdefineInjectable, ɵsetClassMetadata, Injectable, Pipe, ChangeDetectorRef, ɵɵdefineNgModule, ɵɵdefineInjector, ɵɵsetNgModuleScope, NgModule } from '@angular/core';
 import { of, isObservable } from 'rxjs';
+import { __extends } from 'tslib';
 import { CommonModule } from '@angular/common';
 
 /* tslint:disable */
@@ -161,15 +162,13 @@ var NgxTranslatorImplService = /** @class */ (function () {
     return NgxTranslatorImplService;
 }());
 
-var HyperTranslatePipe = /** @class */ (function () {
-    function HyperTranslatePipe(translate, _ref) {
-        this.translate = translate;
-        this._ref = _ref;
+var HyperTranslatePipeBase = /** @class */ (function () {
+    function HyperTranslatePipeBase() {
         this.value = '';
         this.lastKey = null;
         this.lastParams = [];
     }
-    HyperTranslatePipe.prototype.updateValue = function (key, interpolateParams, translations) {
+    HyperTranslatePipeBase.prototype.updateValue = function (key, interpolateParams, translations) {
         var _this = this;
         var onTranslation = function (res) {
             _this.value = res !== undefined ? res : key;
@@ -177,7 +176,7 @@ var HyperTranslatePipe = /** @class */ (function () {
             _this._ref.markForCheck();
         };
         if (translations) {
-            var res = this.translate.getParsedResult(translations, key, interpolateParams);
+            var res = this._translate.getParsedResult(translations, key, interpolateParams);
             if (isObservable(res.subscribe)) {
                 res.subscribe(onTranslation);
             }
@@ -185,9 +184,9 @@ var HyperTranslatePipe = /** @class */ (function () {
                 onTranslation(res);
             }
         }
-        this.translate.get(key, interpolateParams).subscribe(onTranslation);
+        this._translate.get(key, interpolateParams).subscribe(onTranslation);
     };
-    HyperTranslatePipe.prototype.transform = function (query) {
+    HyperTranslatePipeBase.prototype.transform = function (query) {
         var _this = this;
         var args = [];
         for (var _i = 1; _i < arguments.length; _i++) {
@@ -229,8 +228,8 @@ var HyperTranslatePipe = /** @class */ (function () {
         this._dispose();
         // subscribe to onTranslationChange event, in case the translations change
         if (!this.onTranslationChange) {
-            this.onTranslationChange = this.translate.onTranslationChange.subscribe(function (event) {
-                if (_this.lastKey && event.lang === _this.translate.currentLang) {
+            this.onTranslationChange = this._translate.onTranslationChange.subscribe(function (event) {
+                if (_this.lastKey && event.lang === _this._translate.currentLang) {
                     _this.lastKey = null;
                     _this.updateValue(query, interpolateParams, event.translations);
                 }
@@ -238,7 +237,7 @@ var HyperTranslatePipe = /** @class */ (function () {
         }
         // subscribe to onLangChange event, in case the language changes
         if (!this.onLangChange) {
-            this.onLangChange = this.translate.onLangChange.subscribe(function (event) {
+            this.onLangChange = this._translate.onLangChange.subscribe(function (event) {
                 if (_this.lastKey) {
                     _this.lastKey = null; // we want to make sure it doesn't return the same value until it's been updated
                     _this.updateValue(query, interpolateParams, event.translations);
@@ -247,29 +246,19 @@ var HyperTranslatePipe = /** @class */ (function () {
         }
         // subscribe to onDefaultLangChange event, in case the default language changes
         if (!this.onDefaultLangChange) {
-            this.onDefaultLangChange = this.translate.onDefaultLangChange.subscribe(function () {
+            this.onDefaultLangChange = this._translate.onDefaultLangChange.subscribe(function () {
                 if (_this.lastKey) {
                     _this.lastKey = null; // we want to make sure it doesn't return the same value until it's been updated
                     _this.updateValue(query, interpolateParams);
                 }
             });
         }
-        if (this.value == query) {
-            if (args.length > 2 && isDefined(args[2]) && typeof args[2] === 'object') {
-                var defaultResources = args[2];
-                // Update it
-                var anotherTry = lookupDeeply(defaultResources, query, interpolateParams);
-                if (anotherTry) {
-                    this.value = anotherTry;
-                }
-            }
-        }
         return this.value;
     };
     /**
      * Clean any existing subscription to change events
      */
-    HyperTranslatePipe.prototype._dispose = function () {
+    HyperTranslatePipeBase.prototype._dispose = function () {
         if (typeof this.onTranslationChange !== 'undefined') {
             this.onTranslationChange.unsubscribe();
             this.onTranslationChange = undefined;
@@ -283,14 +272,27 @@ var HyperTranslatePipe = /** @class */ (function () {
             this.onDefaultLangChange = undefined;
         }
     };
-    HyperTranslatePipe.prototype.ngOnDestroy = function () {
+    HyperTranslatePipeBase.prototype.ngOnDestroy = function () {
         this._dispose();
     };
+    /** @nocollapse */ HyperTranslatePipeBase.ɵfac = function HyperTranslatePipeBase_Factory(t) { return new (t || HyperTranslatePipeBase)(); };
+    /** @nocollapse */ HyperTranslatePipeBase.ɵdir = ɵɵdefineDirective({ type: HyperTranslatePipeBase });
+    return HyperTranslatePipeBase;
+}());
+
+var HyperTranslatePipe = /** @class */ (function (_super) {
+    __extends(HyperTranslatePipe, _super);
+    function HyperTranslatePipe(_translate, _ref) {
+        var _this = _super.call(this) || this;
+        _this._translate = _translate;
+        _this._ref = _ref;
+        return _this;
+    }
     /** @nocollapse */ HyperTranslatePipe.ɵfac = function HyperTranslatePipe_Factory(t) { return new (t || HyperTranslatePipe)(ɵɵdirectiveInject(NgxTranslatorImplService), ɵɵinjectPipeChangeDetectorRef()); };
     /** @nocollapse */ HyperTranslatePipe.ɵpipe = ɵɵdefinePipe({ name: "hyperTrans", type: HyperTranslatePipe, pure: false });
     /** @nocollapse */ HyperTranslatePipe.ɵprov = ɵɵdefineInjectable({ token: HyperTranslatePipe, factory: HyperTranslatePipe.ɵfac });
     return HyperTranslatePipe;
-}());
+}(HyperTranslatePipeBase));
 /*@__PURE__*/ (function () { ɵsetClassMetadata(HyperTranslatePipe, [{
         type: Injectable
     }, {
@@ -330,5 +332,5 @@ var NgxI18nModule = /** @class */ (function () {
  * Generated bundle index. Do not edit.
  */
 
-export { HyperTranslatePipe, NgxI18nModule, NgxTranslatorImplService };
+export { HyperTranslatePipe, HyperTranslatePipeBase, NgxI18nModule, NgxTranslatorImplService };
 //# sourceMappingURL=polpware-ngx-i18n.js.map
