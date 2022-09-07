@@ -1,5 +1,5 @@
 import * as i0 from '@angular/core';
-import { EventEmitter, Directive, Injectable, Pipe, NgModule } from '@angular/core';
+import { EventEmitter, Pipe, Injectable, NgModule } from '@angular/core';
 import { of, isObservable } from 'rxjs';
 import { CommonModule } from '@angular/common';
 
@@ -270,10 +270,13 @@ class HyperTranslatePipeBase {
     }
 }
 /** @nocollapse */ HyperTranslatePipeBase.ɵfac = function HyperTranslatePipeBase_Factory(t) { return new (t || HyperTranslatePipeBase)(); };
-/** @nocollapse */ HyperTranslatePipeBase.ɵdir = /** @pureOrBreakMyCode */ i0.ɵɵdefineDirective({ type: HyperTranslatePipeBase });
+/** @nocollapse */ HyperTranslatePipeBase.ɵpipe = /** @pureOrBreakMyCode */ i0.ɵɵdefinePipe({ name: "hyperTransBase", type: HyperTranslatePipeBase, pure: true });
 (function () {
     (typeof ngDevMode === "undefined" || ngDevMode) && i0.ɵsetClassMetadata(HyperTranslatePipeBase, [{
-            type: Directive
+            type: Pipe,
+            args: [{
+                    name: "hyperTransBase"
+                }]
         }], null, null);
 })();
 
