@@ -1,25 +1,25 @@
 {
   "name": "@polpware/ngx-i18n",
-  "version": "13.0.1",
+  "version": "14.0.0",
   "dependencies": {
     "tslib": "^2.0.0"
   },
   "peerDependencies": {
-    "@angular/common": "^13.0.0",
-    "@angular/core": "^13.0.0"
+    "@angular/common": "^14.0.0",
+    "@angular/core": "^14.0.0"
   },
   "module": "fesm2015/polpware-ngx-i18n.mjs",
   "es2020": "fesm2020/polpware-ngx-i18n.mjs",
   "esm2020": "esm2020/polpware-ngx-i18n.mjs",
   "fesm2020": "fesm2020/polpware-ngx-i18n.mjs",
   "fesm2015": "fesm2015/polpware-ngx-i18n.mjs",
-  "typings": "polpware-ngx-i18n.d.ts",
+  "typings": "index.d.ts",
   "exports": {
     "./package.json": {
       "default": "./package.json"
     },
     ".": {
-      "types": "./polpware-ngx-i18n.d.ts",
+      "types": "./index.d.ts",
       "esm2020": "./esm2020/polpware-ngx-i18n.mjs",
       "es2020": "./fesm2020/polpware-ngx-i18n.mjs",
       "es2015": "./fesm2015/polpware-ngx-i18n.mjs",

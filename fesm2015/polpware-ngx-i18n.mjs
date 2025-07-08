@@ -306,9 +306,7 @@ class NgxI18nModule {
 }
 /** @nocollapse */ NgxI18nModule.ɵfac = function NgxI18nModule_Factory(t) { return new (t || NgxI18nModule)(); };
 /** @nocollapse */ NgxI18nModule.ɵmod = /** @pureOrBreakMyCode */ i0.ɵɵdefineNgModule({ type: NgxI18nModule });
-/** @nocollapse */ NgxI18nModule.ɵinj = /** @pureOrBreakMyCode */ i0.ɵɵdefineInjector({ imports: [[
-            CommonModule,
-        ]] });
+/** @nocollapse */ NgxI18nModule.ɵinj = /** @pureOrBreakMyCode */ i0.ɵɵdefineInjector({ imports: [CommonModule] });
 (function () {
     (typeof ngDevMode === "undefined" || ngDevMode) && i0.ɵsetClassMetadata(NgxI18nModule, [{
             type: NgModule,

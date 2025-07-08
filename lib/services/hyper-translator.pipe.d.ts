@@ -7,6 +7,6 @@ export declare class HyperTranslatePipe extends HyperTranslatePipeBase {
     protected _ref: ChangeDetectorRef;
     constructor(_translate: NgxTranslatorImplService, _ref: ChangeDetectorRef);
     static ɵfac: i0.ɵɵFactoryDeclaration<HyperTranslatePipe, never>;
-    static ɵpipe: i0.ɵɵPipeDeclaration<HyperTranslatePipe, "hyperTrans">;
+    static ɵpipe: i0.ɵɵPipeDeclaration<HyperTranslatePipe, "hyperTrans", false>;
     static ɵprov: i0.ɵɵInjectableDeclaration<HyperTranslatePipe>;
 }

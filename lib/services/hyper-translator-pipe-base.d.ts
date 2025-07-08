@@ -19,5 +19,5 @@ export declare abstract class HyperTranslatePipeBase implements PipeTransform, O
     private _dispose;
     ngOnDestroy(): void;
     static ɵfac: i0.ɵɵFactoryDeclaration<HyperTranslatePipeBase, never>;
-    static ɵpipe: i0.ɵɵPipeDeclaration<HyperTranslatePipeBase, "hyperTransBase">;
+    static ɵpipe: i0.ɵɵPipeDeclaration<HyperTranslatePipeBase, "hyperTransBase", false>;
 }
