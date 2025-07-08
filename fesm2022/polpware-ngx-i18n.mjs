@@ -268,9 +268,9 @@ class HyperTranslatePipeBase {
     ngOnDestroy() {
         this._dispose();
     }
+    /** @nocollapse */ static { this.ɵfac = function HyperTranslatePipeBase_Factory(t) { return new (t || HyperTranslatePipeBase)(); }; }
+    /** @nocollapse */ static { this.ɵpipe = /** @pureOrBreakMyCode */ i0.ɵɵdefinePipe({ name: "hyperTransBase", type: HyperTranslatePipeBase, pure: true }); }
 }
-/** @nocollapse */ HyperTranslatePipeBase.ɵfac = function HyperTranslatePipeBase_Factory(t) { return new (t || HyperTranslatePipeBase)(); };
-/** @nocollapse */ HyperTranslatePipeBase.ɵpipe = /** @pureOrBreakMyCode */ i0.ɵɵdefinePipe({ name: "hyperTransBase", type: HyperTranslatePipeBase, pure: true });
 (function () { (typeof ngDevMode === "undefined" || ngDevMode) && i0.ɵsetClassMetadata(HyperTranslatePipeBase, [{
         type: Pipe,
         args: [{
@@ -284,10 +284,10 @@ class HyperTranslatePipe extends HyperTranslatePipeBase {
         this._translate = _translate;
         this._ref = _ref;
     }
+    /** @nocollapse */ static { this.ɵfac = function HyperTranslatePipe_Factory(t) { return new (t || HyperTranslatePipe)(i0.ɵɵdirectiveInject(NgxTranslatorImplService, 16), i0.ɵɵdirectiveInject(i0.ChangeDetectorRef, 16)); }; }
+    /** @nocollapse */ static { this.ɵpipe = /** @pureOrBreakMyCode */ i0.ɵɵdefinePipe({ name: "hyperTrans", type: HyperTranslatePipe, pure: false }); }
+    /** @nocollapse */ static { this.ɵprov = /** @pureOrBreakMyCode */ i0.ɵɵdefineInjectable({ token: HyperTranslatePipe, factory: HyperTranslatePipe.ɵfac }); }
 }
-/** @nocollapse */ HyperTranslatePipe.ɵfac = function HyperTranslatePipe_Factory(t) { return new (t || HyperTranslatePipe)(i0.ɵɵdirectiveInject(NgxTranslatorImplService, 16), i0.ɵɵdirectiveInject(i0.ChangeDetectorRef, 16)); };
-/** @nocollapse */ HyperTranslatePipe.ɵpipe = /** @pureOrBreakMyCode */ i0.ɵɵdefinePipe({ name: "hyperTrans", type: HyperTranslatePipe, pure: false });
-/** @nocollapse */ HyperTranslatePipe.ɵprov = /** @pureOrBreakMyCode */ i0.ɵɵdefineInjectable({ token: HyperTranslatePipe, factory: HyperTranslatePipe.ɵfac });
 (function () { (typeof ngDevMode === "undefined" || ngDevMode) && i0.ɵsetClassMetadata(HyperTranslatePipe, [{
         type: Injectable
     }, {
@@ -299,10 +299,10 @@ class HyperTranslatePipe extends HyperTranslatePipeBase {
     }], function () { return [{ type: NgxTranslatorImplService }, { type: i0.ChangeDetectorRef }]; }, null); })();
 
 class NgxI18nModule {
+    /** @nocollapse */ static { this.ɵfac = function NgxI18nModule_Factory(t) { return new (t || NgxI18nModule)(); }; }
+    /** @nocollapse */ static { this.ɵmod = /** @pureOrBreakMyCode */ i0.ɵɵdefineNgModule({ type: NgxI18nModule }); }
+    /** @nocollapse */ static { this.ɵinj = /** @pureOrBreakMyCode */ i0.ɵɵdefineInjector({ imports: [CommonModule] }); }
 }
-/** @nocollapse */ NgxI18nModule.ɵfac = function NgxI18nModule_Factory(t) { return new (t || NgxI18nModule)(); };
-/** @nocollapse */ NgxI18nModule.ɵmod = /** @pureOrBreakMyCode */ i0.ɵɵdefineNgModule({ type: NgxI18nModule });
-/** @nocollapse */ NgxI18nModule.ɵinj = /** @pureOrBreakMyCode */ i0.ɵɵdefineInjector({ imports: [CommonModule] });
 (function () { (typeof ngDevMode === "undefined" || ngDevMode) && i0.ɵsetClassMetadata(NgxI18nModule, [{
         type: NgModule,
         args: [{
