@@ -271,7 +271,7 @@ class HyperTranslatePipeBase {
     /** @nocollapse */ static { this.ɵfac = function HyperTranslatePipeBase_Factory(t) { return new (t || HyperTranslatePipeBase)(); }; }
     /** @nocollapse */ static { this.ɵpipe = /** @pureOrBreakMyCode */ i0.ɵɵdefinePipe({ name: "hyperTransBase", type: HyperTranslatePipeBase, pure: true }); }
 }
-(function () { (typeof ngDevMode === "undefined" || ngDevMode) && i0.ɵsetClassMetadata(HyperTranslatePipeBase, [{
+(() => { (typeof ngDevMode === "undefined" || ngDevMode) && i0.ɵsetClassMetadata(HyperTranslatePipeBase, [{
         type: Pipe,
         args: [{
                 name: "hyperTransBase"
@@ -288,7 +288,7 @@ class HyperTranslatePipe extends HyperTranslatePipeBase {
     /** @nocollapse */ static { this.ɵpipe = /** @pureOrBreakMyCode */ i0.ɵɵdefinePipe({ name: "hyperTrans", type: HyperTranslatePipe, pure: false }); }
     /** @nocollapse */ static { this.ɵprov = /** @pureOrBreakMyCode */ i0.ɵɵdefineInjectable({ token: HyperTranslatePipe, factory: HyperTranslatePipe.ɵfac }); }
 }
-(function () { (typeof ngDevMode === "undefined" || ngDevMode) && i0.ɵsetClassMetadata(HyperTranslatePipe, [{
+(() => { (typeof ngDevMode === "undefined" || ngDevMode) && i0.ɵsetClassMetadata(HyperTranslatePipe, [{
         type: Injectable
     }, {
         type: Pipe,
@@ -296,14 +296,14 @@ class HyperTranslatePipe extends HyperTranslatePipeBase {
                 name: 'hyperTrans',
                 pure: false // required to update the value when the promise is resolved
             }]
-    }], function () { return [{ type: NgxTranslatorImplService }, { type: i0.ChangeDetectorRef }]; }, null); })();
+    }], () => [{ type: NgxTranslatorImplService }, { type: i0.ChangeDetectorRef }], null); })();
 
 class NgxI18nModule {
     /** @nocollapse */ static { this.ɵfac = function NgxI18nModule_Factory(t) { return new (t || NgxI18nModule)(); }; }
     /** @nocollapse */ static { this.ɵmod = /** @pureOrBreakMyCode */ i0.ɵɵdefineNgModule({ type: NgxI18nModule }); }
     /** @nocollapse */ static { this.ɵinj = /** @pureOrBreakMyCode */ i0.ɵɵdefineInjector({ imports: [CommonModule] }); }
 }
-(function () { (typeof ngDevMode === "undefined" || ngDevMode) && i0.ɵsetClassMetadata(NgxI18nModule, [{
+(() => { (typeof ngDevMode === "undefined" || ngDevMode) && i0.ɵsetClassMetadata(NgxI18nModule, [{
         type: NgModule,
         args: [{
                 declarations: [HyperTranslatePipe],
