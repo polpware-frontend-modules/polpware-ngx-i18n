@@ -268,7 +268,7 @@ class HyperTranslatePipeBase {
     ngOnDestroy() {
         this._dispose();
     }
-    /** @nocollapse */ static { this.ɵfac = function HyperTranslatePipeBase_Factory(t) { return new (t || HyperTranslatePipeBase)(); }; }
+    /** @nocollapse */ static { this.ɵfac = function HyperTranslatePipeBase_Factory(__ngFactoryType__) { return new (__ngFactoryType__ || HyperTranslatePipeBase)(); }; }
     /** @nocollapse */ static { this.ɵpipe = /** @pureOrBreakMyCode */ i0.ɵɵdefinePipe({ name: "hyperTransBase", type: HyperTranslatePipeBase, pure: true }); }
 }
 (() => { (typeof ngDevMode === "undefined" || ngDevMode) && i0.ɵsetClassMetadata(HyperTranslatePipeBase, [{
@@ -284,7 +284,7 @@ class HyperTranslatePipe extends HyperTranslatePipeBase {
         this._translate = _translate;
         this._ref = _ref;
     }
-    /** @nocollapse */ static { this.ɵfac = function HyperTranslatePipe_Factory(t) { return new (t || HyperTranslatePipe)(i0.ɵɵdirectiveInject(NgxTranslatorImplService, 16), i0.ɵɵdirectiveInject(i0.ChangeDetectorRef, 16)); }; }
+    /** @nocollapse */ static { this.ɵfac = function HyperTranslatePipe_Factory(__ngFactoryType__) { return new (__ngFactoryType__ || HyperTranslatePipe)(i0.ɵɵdirectiveInject(NgxTranslatorImplService, 16), i0.ɵɵdirectiveInject(i0.ChangeDetectorRef, 16)); }; }
     /** @nocollapse */ static { this.ɵpipe = /** @pureOrBreakMyCode */ i0.ɵɵdefinePipe({ name: "hyperTrans", type: HyperTranslatePipe, pure: false }); }
     /** @nocollapse */ static { this.ɵprov = /** @pureOrBreakMyCode */ i0.ɵɵdefineInjectable({ token: HyperTranslatePipe, factory: HyperTranslatePipe.ɵfac }); }
 }
@@ -299,7 +299,7 @@ class HyperTranslatePipe extends HyperTranslatePipeBase {
     }], () => [{ type: NgxTranslatorImplService }, { type: i0.ChangeDetectorRef }], null); })();
 
 class NgxI18nModule {
-    /** @nocollapse */ static { this.ɵfac = function NgxI18nModule_Factory(t) { return new (t || NgxI18nModule)(); }; }
+    /** @nocollapse */ static { this.ɵfac = function NgxI18nModule_Factory(__ngFactoryType__) { return new (__ngFactoryType__ || NgxI18nModule)(); }; }
     /** @nocollapse */ static { this.ɵmod = /** @pureOrBreakMyCode */ i0.ɵɵdefineNgModule({ type: NgxI18nModule }); }
     /** @nocollapse */ static { this.ɵinj = /** @pureOrBreakMyCode */ i0.ɵɵdefineInjector({ imports: [CommonModule] }); }
 }
