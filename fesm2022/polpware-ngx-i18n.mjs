@@ -269,12 +269,13 @@ class HyperTranslatePipeBase {
         this._dispose();
     }
     /** @nocollapse */ static { this.ɵfac = function HyperTranslatePipeBase_Factory(__ngFactoryType__) { return new (__ngFactoryType__ || HyperTranslatePipeBase)(); }; }
-    /** @nocollapse */ static { this.ɵpipe = /** @pureOrBreakMyCode */ i0.ɵɵdefinePipe({ name: "hyperTransBase", type: HyperTranslatePipeBase, pure: true }); }
+    /** @nocollapse */ static { this.ɵpipe = /** @pureOrBreakMyCode */ i0.ɵɵdefinePipe({ name: "hyperTransBase", type: HyperTranslatePipeBase, pure: true, standalone: false }); }
 }
 (() => { (typeof ngDevMode === "undefined" || ngDevMode) && i0.ɵsetClassMetadata(HyperTranslatePipeBase, [{
         type: Pipe,
         args: [{
-                name: "hyperTransBase"
+                name: "hyperTransBase",
+                standalone: false
             }]
     }], null, null); })();
 
@@ -285,7 +286,7 @@ class HyperTranslatePipe extends HyperTranslatePipeBase {
         this._ref = _ref;
     }
     /** @nocollapse */ static { this.ɵfac = function HyperTranslatePipe_Factory(__ngFactoryType__) { return new (__ngFactoryType__ || HyperTranslatePipe)(i0.ɵɵdirectiveInject(NgxTranslatorImplService, 16), i0.ɵɵdirectiveInject(i0.ChangeDetectorRef, 16)); }; }
-    /** @nocollapse */ static { this.ɵpipe = /** @pureOrBreakMyCode */ i0.ɵɵdefinePipe({ name: "hyperTrans", type: HyperTranslatePipe, pure: false }); }
+    /** @nocollapse */ static { this.ɵpipe = /** @pureOrBreakMyCode */ i0.ɵɵdefinePipe({ name: "hyperTrans", type: HyperTranslatePipe, pure: false, standalone: false }); }
     /** @nocollapse */ static { this.ɵprov = /** @pureOrBreakMyCode */ i0.ɵɵdefineInjectable({ token: HyperTranslatePipe, factory: HyperTranslatePipe.ɵfac }); }
 }
 (() => { (typeof ngDevMode === "undefined" || ngDevMode) && i0.ɵsetClassMetadata(HyperTranslatePipe, [{
@@ -295,6 +296,8 @@ class HyperTranslatePipe extends HyperTranslatePipeBase {
         args: [{
                 name: 'hyperTrans',
                 pure: false // required to update the value when the promise is resolved
+                ,
+                standalone: false
             }]
     }], () => [{ type: NgxTranslatorImplService }, { type: i0.ChangeDetectorRef }], null); })();
 
